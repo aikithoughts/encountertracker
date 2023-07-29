@@ -10,13 +10,11 @@ export default function EncounterBoard() {
 }
 
 function EncounterTable({ combatants }){
-  const rows = [];
-  combatants.forEach((combatant) => {
-    rows.push(
-      renderCombatant(combatant)
-    )
-   }
-  )
+  
+  const sortedCombatants = combatants.slice().sort((a, b) => b.initiative - a.initiative);
+  
+  const rows = sortedCombatants.map((combatant) => renderCombatant(combatant));
+
   return (
     <table>
       <thead>
