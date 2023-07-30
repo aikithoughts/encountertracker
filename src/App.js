@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import './App.css';
 
 export default function EncounterBoard() {
@@ -10,11 +11,24 @@ export default function EncounterBoard() {
 }
 
 function EncounterTable({ combatants }){
-  
-  const sortedCombatants = combatants.slice().sort((a, b) => b.initiative - a.initiative);
-  
-  const rows = sortedCombatants.map((combatant) => renderCombatant(combatant));
+  const [combatantState, setCombatantState] = useState(combatants);
 
+  const handleDeletedCombatant = (combatantName) => {
+    const updatedCombatants = combatants.filter((combatant) => combatant.name !== combatantName);
+    setCombatantState(updatedCombatants);
+    console.log("Deleted combatant:", combatantName);
+  }
+  
+  const sortedCombatants = combatantState.slice().sort((a, b) => b.initiative - a.initiative);
+  
+  const rows = sortedCombatants.map((combatant) => (
+    <Combatant
+      key={combatant.name}
+      combatant={combatant}
+      onDeleteCombatant={handleDeletedCombatant}
+      />
+  
+  ));
   return (
     <table>
       <thead>
@@ -32,25 +46,19 @@ function EncounterTable({ combatants }){
   )
 }
 
-function renderCombatant( combatant) {
-  return(
-    <Combatant
-      key={combatant.name}
-      name={combatant.name}
-      initiative={combatant.initiative}
-      type={combatant.type}
-      number={combatant.number}
-      />
-  )
-}
+function Combatant({ combatant, onDeleteCombatant }){
 
-function Combatant({ name, initiative, type, number }){
+  const handleDeleteClick = () => {
+    // Call the onDeleteCombatant function with the combatant's name
+    onDeleteCombatant(combatant.name);
+  };
   return(
-      <tr id={name}>
-        <td>{name}</td>
-        <td>{initiative}</td>
-        <td>{type}</td>
-        <td>{number}</td>
+      <tr id={combatant.name}>
+        <td>{combatant.name}</td>
+        <td>{combatant.initiative}</td>
+        <td>{combatant.type}</td>
+        <td>{combatant.number}</td>
+        <td><button onClick={handleDeleteClick}>Delete</button></td>
       </tr>
   )
 }
