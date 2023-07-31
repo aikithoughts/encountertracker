@@ -32,6 +32,22 @@ function EncounterTable({ combatants }){
       return updatedCombatants;
     });
   };
+  
+  const processFormData = (formData) => {
+    // Do something with the form data in the parent component
+    //console.log('Form data received in parent:', formData);
+    // You can set the data to the state or perform other actions with it
+    const newCombatant = {
+      id: Date.now(), // Generate a unique ID (you can use a library like uuid for a more reliable unique ID)
+      name: formData.name,
+      initiative: parseInt(formData.initiative),
+      type: formData.type,
+      currenthp: parseInt(formData.hitpoints),
+      totalhp: parseInt(formData.hitpoints),
+    };
+
+    setCombatantState((prevCombatants) => [...prevCombatants, newCombatant]);
+  };
 
   const sortedCombatants = combatantState.slice().sort((a, b) => b.initiative - a.initiative);
   
@@ -64,8 +80,58 @@ function EncounterTable({ combatants }){
       <button onClick={handleToggleEditMode}>
         {isEditMode ? "Save" : "Edit Mode"}
       </button>
+      <div>
+        <h2>Add New Combatant</h2>
+        <AddCombatant onSubmitForm={processFormData} />
+      </div>
     </div>
   )
+}
+
+function AddCombatant({ onSubmitForm }) {
+  const [formData, setFormData] = useState({
+    name: '',
+    initiative: 0,
+    type: '',
+    hitpoints: 0
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmitForm(formData); // Call the callback function to pass the form data to the parent component
+    setFormData({  // Reset the form after submission
+      name: '',
+      initiative: 0,
+      type: '',
+      hitpoints: 0
+    });
+  };
+
+  return (
+    <form id="addCombatantForm" onSubmit={handleSubmit}>
+      <label>Name:
+        <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
+      </label>
+      <label>Initiative:
+        <input type="number" id="initiative" value={formData.initiative} onChange={handleChange} name="initiative" required />
+      </label>
+      <label>Type:
+        <input type="text" id="type" value={formData.type} onChange={handleChange} name="type" required />
+      </label>
+      <label>Hit Points:
+        <input type="number" id="hitPoints" value={formData.hitpoints} onChange={handleChange} name="hitpoints" required />
+      </label>
+      <button type="submit">Add Combatant</button>
+    </form>
+  );
 }
 
 function Combatant({ combatant, onDeleteCombatant, isEditMode }){
