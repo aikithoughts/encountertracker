@@ -34,9 +34,6 @@ function EncounterTable({ combatants }){
   };
   
   const processFormData = (formData) => {
-    // Do something with the form data in the parent component
-    //console.log('Form data received in parent:', formData);
-    // You can set the data to the state or perform other actions with it
     const newCombatant = {
       id: Date.now(), // Generate a unique ID (you can use a library like uuid for a more reliable unique ID)
       name: formData.name,
