@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Button from 'react-bootstrap/Button';
   
  export default function Combatant({ combatant, onDeleteCombatant, isEditMode, isSelected, onSelectCombatant }){
     const [editedCombatant, setEditedCombatant] = useState(combatant);
@@ -64,7 +65,7 @@ import React, { useState } from 'react';
               readOnly={!isEditMode}
             />
           </td>
-          <td><button onClick={handleDeleteClick}>Delete</button></td>
+          <td><Button variant="warning" onClick={handleDeleteClick}>Delete</Button></td>
         </tr>
     )
   }
