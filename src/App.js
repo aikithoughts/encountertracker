@@ -1,7 +1,7 @@
 import React from 'react';
 import EncounterTable from './EncounterTable';
 import { COMBATANTS } from './data';
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function EncounterBoard() {
   return (

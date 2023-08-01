@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
 import Combatant from './Combatant';
 import AddCombatant from './AddCombatant';
 
@@ -55,7 +57,7 @@ export default function EncounterTable({ combatants }){
     ));
     return (
       <div>
-        <table>
+        <Table striped bordered hover>
           <thead>
             <tr>
               <th>Name</th>
@@ -68,10 +70,10 @@ export default function EncounterTable({ combatants }){
           <tbody>
             {rows}
           </tbody>
-        </table>
-        <button onClick={handleToggleEditMode}>
+        </Table>
+        <Button variant="primary" onClick={handleToggleEditMode}>
           {isEditMode ? "Save" : "Edit Mode"}
-        </button>
+        </Button>
         <div>
           <h2>Add New Combatant</h2>
           <AddCombatant onSubmitForm={processFormData} />
