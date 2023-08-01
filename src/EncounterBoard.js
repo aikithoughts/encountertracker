@@ -1,12 +1,13 @@
 import React from 'react';
 import EncounterTable from './EncounterTable';
-import { COMBATANTS } from './data'; // Assuming your data is in a separate file
+import { COMBATANTS } from './data';
+import Container from 'react-bootstrap/Container'; 
 
 export default function EncounterBoard() {
   return (
-    <div className="encounter-board">
+    <Container style={{ padding: '20px' }}>
       <h1>Dave's Encounter Tracker</h1>
       <EncounterTable combatants={COMBATANTS} />
-    </div>
+    </Container>
   );
 }

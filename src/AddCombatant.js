@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 export default function AddCombatant({ onSubmitForm }) {
     const [formData, setFormData] = useState({
@@ -28,20 +30,48 @@ export default function AddCombatant({ onSubmitForm }) {
     };
   
     return (
-      <form id="addCombatantForm" onSubmit={handleSubmit}>
-        <label>Name:
-          <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
-        </label>
-        <label>Initiative:
-          <input type="number" id="initiative" value={formData.initiative} onChange={handleChange} name="initiative" required />
-        </label>
-        <label>Type:
-          <input type="text" id="type" value={formData.type} onChange={handleChange} name="type" required />
-        </label>
-        <label>Hit Points:
-          <input type="number" id="hitPoints" value={formData.hitpoints} onChange={handleChange} name="hitpoints" required />
-        </label>
-        <button type="submit">Add Combatant</button>
-      </form>
+        <Form id="addCombatantForm" onSubmit={handleSubmit}>
+        <Form.Group controlId="name">
+          <Form.Label>Name:</Form.Label>
+          <Form.Control
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+        <Form.Group controlId="initiative">
+          <Form.Label>Initiative:</Form.Label>
+          <Form.Control
+            type="number"
+            name="initiative"
+            value={formData.initiative}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+        <Form.Group controlId="type">
+          <Form.Label>Type:</Form.Label>
+          <Form.Control
+            type="text"
+            name="type"
+            value={formData.type}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+        <Form.Group controlId="hitPoints">
+          <Form.Label>Hit Points:</Form.Label>
+          <Form.Control
+            type="number"
+            name="hitpoints"
+            value={formData.hitpoints}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+        <Button variant="primary" type="submit">Add Combatant</Button>
+      </Form>
     );
   }
