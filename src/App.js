@@ -13,6 +13,7 @@ export default function EncounterBoard() {
 function EncounterTable({ combatants }){
   const [combatantState, setCombatantState] = useState(combatants);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [selectedCombatantId, setSelectedCombatantId] = useState(null);
 
   const handleDeletedCombatant = (combatantName) => {
     const updatedCombatants = combatantState.filter((combatant) => combatant.name !== combatantName);
@@ -55,6 +56,8 @@ function EncounterTable({ combatants }){
       onDeleteCombatant={handleDeletedCombatant}
       isEditMode={isEditMode}
       onInputChange={(event, field) => handleInputChange(event, index, field)}
+      isSelected={selectedCombatantId === combatant.id}
+      onSelectCombatant={() => setSelectedCombatantId(combatant.id)}
     />
   
   ));
@@ -131,7 +134,7 @@ function AddCombatant({ onSubmitForm }) {
   );
 }
 
-function Combatant({ combatant, onDeleteCombatant, isEditMode }){
+function Combatant({ combatant, onDeleteCombatant, isEditMode, isSelected, onSelectCombatant }){
   const [editedCombatant, setEditedCombatant] = useState(combatant);
 
   const handleDeleteClick = () => {
@@ -147,7 +150,10 @@ function Combatant({ combatant, onDeleteCombatant, isEditMode }){
     }));
   };
   return(
-      <tr id={combatant.id}>
+      <tr
+        id={combatant.id}
+        style={{ backgroundColor: isSelected ? 'lightblue' : 'inherit' }}
+        onClick={onSelectCombatant}>
         <td>
           <input
             type="text"
