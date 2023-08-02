@@ -3,16 +3,22 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Combatant from './Combatant';
 import AddCombatant from './AddCombatant';
+import JsonDisplay from './JsonDisplay';
 
 export default function EncounterTable({ combatants }){
     const [combatantState, setCombatantState] = useState(combatants || []);
     const [isEditMode, setIsEditMode] = useState(false);
     const [selectedCombatantId, setSelectedCombatantId] = useState(null);
+    const [enemyData, setEnemyData] = useState(null);
   
     const handleDeletedCombatant = (combatantName) => {
       const updatedCombatants = combatantState.filter((combatant) => combatant.name !== combatantName);
       setCombatantState(updatedCombatants);
       console.log("Deleted combatant:", combatantName);
+    };
+
+    const handleClearData = () => {
+      setEnemyData(null);
     };
   
     const handleToggleEditMode = () => {
@@ -26,6 +32,12 @@ export default function EncounterTable({ combatants }){
         updatedCombatants[index][field] = value;
         return updatedCombatants;
       });
+    };
+
+    const handleDataFromChild = (data) => {
+      // Do something with the data received from the child component
+      setEnemyData(data);
+      // You can perform any further logic or state updates here
     };
     
     const processFormData = (formData) => {
@@ -52,6 +64,7 @@ export default function EncounterTable({ combatants }){
         onInputChange={(event, field) => handleInputChange(event, index, field)}
         isSelected={selectedCombatantId === combatant.id}
         onSelectCombatant={() => setSelectedCombatantId(combatant.id)}
+        onDataFromChild={handleDataFromChild}
       />
     
     ));
@@ -78,6 +91,7 @@ export default function EncounterTable({ combatants }){
           <h2>Add New Combatant</h2>
           <AddCombatant onSubmitForm={processFormData} />
         </div>
+        {(enemyData !== null) ? <JsonDisplay data={enemyData} onClearData={handleClearData}/> : ''}
       </div>
     )
   }
