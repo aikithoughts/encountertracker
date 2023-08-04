@@ -3,7 +3,9 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Combatant from './Combatant';
 import AddCombatant from './AddCombatant';
-import JsonDisplay from './JsonDisplay';
+import MonsterStatBlock from './MonsterStatBlock';
+import "./monster-stats.css"; // Import the CSS file for the EncounterTable component
+
 
 export default function EncounterTable({ combatants }){
     const [combatantState, setCombatantState] = useState(combatants || []);
@@ -91,7 +93,7 @@ export default function EncounterTable({ combatants }){
           <h2>Add New Combatant</h2>
           <AddCombatant onSubmitForm={processFormData} />
         </div>
-        {(enemyData !== null) ? <JsonDisplay data={enemyData} onClearData={handleClearData}/> : ''}
+        {(enemyData !== null) ? <MonsterStatBlock monster={enemyData} onClearData={handleClearData}/> : ''}
       </div>
     )
   }
