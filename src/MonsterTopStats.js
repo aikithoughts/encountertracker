@@ -21,7 +21,8 @@ export default function MonsterTopStats({ monster }) {
         charisma,
         damage_immunities: damageImmunities,
         condition_immunities: conditionImmunities,
-        proficiencies } = monster;
+        proficiencies,
+        special_abilities: specialAbilities } = monster;
 
     let armorNames = [];
     let immunities = [];
@@ -84,6 +85,43 @@ export default function MonsterTopStats({ monster }) {
             .join("; ");
     }
 
+    // Filter the `proficiencies' array to get skill-related proficiencies.
+    const skillProficiencies = proficiencies.filter((proficiency) =>
+      proficiency.proficiency.index.includes("skill")
+    );
+
+    let skillProficienciesOutput;
+    if (skillProficiencies.length === 0 ) {
+        skillProficienciesOutput = "Not available";
+    } else {
+        const skillProficiencyMap = {};
+
+        skillProficiencies.forEach((skillProficiency) => {
+            const nameParts = skillProficiency.proficiency.name.split(": ");
+            const skillProficiencyName = nameParts[1].toUpperCase();
+            skillProficiencyMap[skillProficiencyName] = skillProficiency.value;
+        });
+
+        skillProficienciesOutput = Object.entries(skillProficiencyMap)
+           .map(([name, value]) => `${name}: ${value}`)
+           .join("; ");
+    }
+
+    let specialAbilitiesOutput;
+    if (specialAbilities.length === 0) {
+        specialAbilitiesOutput = "Not available";
+    } else {
+        specialAbilitiesOutput = specialAbilities.map((specialAbility, index) => (
+            <>
+                <h4>{specialAbility.name}</h4>
+                <p>
+                  {specialAbility.desc}
+                  {specialAbility.usage && (`${specialAbility.usage.times} ${specialAbility.usage.type}`)}
+                </p>
+            </>
+        ));
+    }
+    
     return (
         <div className="top-stats">
             <div className="property-line first">
@@ -135,6 +173,10 @@ export default function MonsterTopStats({ monster }) {
                 <p>{savingThrowsOutput}</p>
             </div> {/* property line */}
             <div className="property-line">
+                <h4>Proficiences</h4>
+                <p>{skillProficienciesOutput}</p>
+            </div> {/* property line */}
+            <div className="property-line">
                 <h4>Damage Immunities</h4>
                 <p>{immunities}</p>
             </div> {/* property line */}
@@ -154,6 +196,9 @@ export default function MonsterTopStats({ monster }) {
                 <h4>Challenge</h4>
                 <p>{challengeRating} ({xp} XP)</p>
             </div> {/* property line */}
+            <div className="property-block">
+                {specialAbilitiesOutput}
+            </div>
         </div>
     )
 }
