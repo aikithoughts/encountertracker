@@ -6,7 +6,8 @@ export default function MonsterTopStats({ monster }) {
     const { 
         armor_class: armorClass, 
         hit_points: hitPoints,
-        hit_dice: hitDice,
+        // hit_dice: hitDice,
+        hit_points_roll: hpRoll,
         speed,
         senses,
         languages,
@@ -58,68 +59,68 @@ export default function MonsterTopStats({ monster }) {
     const speedsResult = formattedSpeeds.join (", ");
 
     return (
-        <div class="top-stats">
-            <div class="property-line first">
+        <div className="top-stats">
+            <div className="property-line first">
                 <h4>Armor Class</h4>
                 <p>{armorClass[0].value} ({armorNames})</p>
             </div> {/* property line */}
-            <div class="property-line">
+            <div className="property-line">
                 <h4>Hit Points</h4>
-                <p>{hitPoints} ({hitDice} + 6)</p>
+                <p>{hitPoints} ({hpRoll})</p>
             </div> {/* property line */}
-            <div class="property-line last">
+            <div className="property-line last">
                 <h4>Speed</h4>
                 <p>{speedsResult}</p> {/* TODO Add other movement types */}
             </div> {/* property line */}
-            <svg height="5" width="100%" class="tapered-rule">
+            <svg height="5" width="100%" className="tapered-rule">
                 <polyline points="0,0 400,2.5 0,5"></polyline>
             </svg>
-            <div class="abilities">
-                <div class="ability-strength">
+            <div className="abilities">
+                <div className="ability-strength">
                     <h4>STR</h4>
                     <p>{strength}</p>
                 </div> {/* ability strength */}
-                <div class="ability-dexterity">
+                <div className="ability-dexterity">
                     <h4>DEX</h4>
                     <p>{dexterity}</p>
                 </div> {/* ability dexterity */}
-                <div class="ability-constitution">
+                <div className="ability-constitution">
                     <h4>CON</h4>
                     <p>{constitution}</p>
                 </div> {/* ability constitution */}
-                <div class="ability-intelligence">
+                <div className="ability-intelligence">
                     <h4>INT</h4>
                     <p>{intelligence}</p>
                 </div> {/* ability intelligence */}
-                <div class="ability-wisdom">
+                <div className="ability-wisdom">
                     <h4>WIS</h4>
                     <p>{wisdom}</p>
                 </div> {/* ability wisdom */}
-                <div class="ability-charisma">
+                <div className="ability-charisma">
                     <h4>CHA</h4>
                     <p>{charisma}</p>
                 </div> {/* ability charisma */}
             </div> {/* abilities */}
-            <svg height="5" width="100%" class="tapered-rule">
+            <svg height="5" width="100%" className="tapered-rule">
                 <polyline points="0,0 400,2.5 0,5"></polyline>
             </svg>
-            <div class="property-line first">
+            <div className="property-line first">
                 <h4>Damage Immunities</h4>
                 <p>{immunities}</p>
             </div> {/* property line */}
-            <div class="property-line">
+            <div className="property-line">
                 <h4>Condition Immunities</h4>
                 <p>{conditions}</p>
             </div> {/* property line */}
-            <div class="property-line">
+            <div className="property-line">
                 <h4>Senses</h4>
                 <p>{sensesResult}</p>
             </div> {/* property line */}
-            <div class="property-line">
+            <div className="property-line">
                 <h4>Languages</h4>
                 <p>{languages}</p>
             </div> {/* property line */}
-            <div class="property-line last">
+            <div className="property-line last">
                 <h4>Challenge</h4>
                 <p>{challengeRating} ({xp} XP)</p>
             </div> {/* property line */}
