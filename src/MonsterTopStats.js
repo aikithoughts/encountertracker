@@ -20,7 +20,8 @@ export default function MonsterTopStats({ monster }) {
         wisdom,
         charisma,
         damage_immunities: damageImmunities,
-        condition_immunities: conditionImmunities } = monster;
+        condition_immunities: conditionImmunities,
+        proficiencies } = monster;
 
     let armorNames = [];
     let immunities = [];
@@ -58,11 +59,36 @@ export default function MonsterTopStats({ monster }) {
 
     const speedsResult = formattedSpeeds.join (", ");
 
+    // Filter the 'proficiencies' array to get only saving throws
+    const savingThrows = proficiencies.filter((proficiency) =>
+        proficiency.proficiency.index.includes("saving-throw")
+    );
+
+    let savingThrowsOutput;
+    if (savingThrows.length === 0) {
+        savingThrowsOutput = "Not available";
+    } else {
+        // Create an object to hold the saving throw names and values
+        const savingThrowMap = {};
+
+        // Populate the saving throw names and values in the object
+        savingThrows.forEach((savingThrow) => {
+            const nameParts = savingThrow.proficiency.name.split(": ");
+            const savingThrowName = nameParts[1].toUpperCase();
+            savingThrowMap[savingThrowName] = savingThrow.value;
+        });
+
+        // Build the output string
+        savingThrowsOutput = Object.entries(savingThrowMap)
+            .map(([name, value]) => `${name}: ${value}`)
+            .join("; ");
+    }
+
     return (
         <div className="top-stats">
             <div className="property-line first">
                 <h4>Armor Class</h4>
-                <p>{armorClass[0].value} ({armorNames})</p>
+                <p>{armorClass[0].value} {armorNames.length > 0 && ` (${armorNames})`}</p>
             </div> {/* property line */}
             <div className="property-line">
                 <h4>Hit Points</h4>
@@ -105,6 +131,10 @@ export default function MonsterTopStats({ monster }) {
                 <polyline points="0,0 400,2.5 0,5"></polyline>
             </svg>
             <div className="property-line first">
+                <h4>Saving throws</h4>
+                <p>{savingThrowsOutput}</p>
+            </div> {/* property line */}
+            <div className="property-line">
                 <h4>Damage Immunities</h4>
                 <p>{immunities}</p>
             </div> {/* property line */}
