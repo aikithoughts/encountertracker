@@ -11,21 +11,34 @@ export default function MonsterTopStats({ monster }) {
         senses,
         languages,
         challenge_rating: challengeRating,
-        xp } = monster;
+        xp,
+        strength,
+        dexterity,
+        constitution,
+        intelligence,
+        wisdom,
+        charisma,
+        damage_immunities: damageImmunities,
+        condition_immunities: conditionImmunities } = monster;
+
     let armorNames = [];
     let immunities = [];
-    let conditionImmunities = [];
+    let conditions = [];
+   // let speeds = [];
 
-    if (armorClass.armor) {
-        armorNames = armorNames.concat(armorClass.armor.map((armor) => armor.name));
+    if (armorClass[0].armor) { /* TODO Figure out how often there are multiple entries in this array */
+        armorNames = armorClass[0].armor.map((armor) => armor.name);
+        armorNames = armorNames.join(', ')
     }
 
-    if (monster.damage_immunities) {
+    if (damageImmunities && damageImmunities.length > 0) {
         immunities = immunities.concat(monster.damage_immunities.map((immunity) => immunity));
+    } else {
+        immunities.push('None')
     }
 
-    if (monster.condition_immunities) {
-        conditionImmunities = conditionImmunities.concat(monster.condition_immunities.map((immunity) => immunity));
+    if (conditionImmunities && conditionImmunities.length > 0) {
+        conditions = conditionImmunities.concat(monster.condition_immunities.map((immunity) => immunity));
     }
 
     const formattedSenses = Object.entries(senses).map(([sense, value]) => {
@@ -36,13 +49,19 @@ export default function MonsterTopStats({ monster }) {
         }
       });
       
-      const sensesResult = formattedSenses.join(", ");
+    const sensesResult = formattedSenses.join(", ");
+
+    const formattedSpeeds = Object.entries(speed).map(([speed, value]) => {
+        return `${speed} (${value})`
+    })
+
+    const speedsResult = formattedSpeeds.join (", ");
 
     return (
         <div class="top-stats">
             <div class="property-line first">
                 <h4>Armor Class</h4>
-                <p>{armorClass.value} ({armorNames})</p>
+                <p>{armorClass[0].value} ({armorNames})</p>
             </div> {/* property line */}
             <div class="property-line">
                 <h4>Hit Points</h4>
@@ -50,7 +69,7 @@ export default function MonsterTopStats({ monster }) {
             </div> {/* property line */}
             <div class="property-line last">
                 <h4>Speed</h4>
-                <p>{speed.walk} (walk)</p> {/* TODO Add other movement types */}
+                <p>{speedsResult}</p> {/* TODO Add other movement types */}
             </div> {/* property line */}
             <svg height="5" width="100%" class="tapered-rule">
                 <polyline points="0,0 400,2.5 0,5"></polyline>
@@ -58,27 +77,27 @@ export default function MonsterTopStats({ monster }) {
             <div class="abilities">
                 <div class="ability-strength">
                     <h4>STR</h4>
-                    <p>{monster.strength}</p>
+                    <p>{strength}</p>
                 </div> {/* ability strength */}
                 <div class="ability-dexterity">
                     <h4>DEX</h4>
-                    <p>{monster.dexterity}</p>
+                    <p>{dexterity}</p>
                 </div> {/* ability dexterity */}
                 <div class="ability-constitution">
                     <h4>CON</h4>
-                    <p>{monster.constitution}</p>
+                    <p>{constitution}</p>
                 </div> {/* ability constitution */}
                 <div class="ability-intelligence">
                     <h4>INT</h4>
-                    <p>{monster.intelligence}</p>
+                    <p>{intelligence}</p>
                 </div> {/* ability intelligence */}
                 <div class="ability-wisdom">
                     <h4>WIS</h4>
-                    <p>{monster.wisdom}</p>
+                    <p>{wisdom}</p>
                 </div> {/* ability wisdom */}
                 <div class="ability-charisma">
                     <h4>CHA</h4>
-                    <p>{monster.charisma}</p>
+                    <p>{charisma}</p>
                 </div> {/* ability charisma */}
             </div> {/* abilities */}
             <svg height="5" width="100%" class="tapered-rule">
@@ -90,7 +109,7 @@ export default function MonsterTopStats({ monster }) {
             </div> {/* property line */}
             <div class="property-line">
                 <h4>Condition Immunities</h4>
-                <p>{conditionImmunities}</p>
+                <p>{conditions}</p>
             </div> {/* property line */}
             <div class="property-line">
                 <h4>Senses</h4>
