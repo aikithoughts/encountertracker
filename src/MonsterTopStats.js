@@ -1,4 +1,5 @@
 import React from 'react';
+import SpellcastingComponent from './Spellcasting';
 import "./monster-stats.css";
 
 export default function MonsterTopStats({ monster }) {
@@ -12,7 +13,7 @@ export default function MonsterTopStats({ monster }) {
         senses,
         languages,
         challenge_rating: challengeRating,
-        xp,
+        // xp,
         strength,
         dexterity,
         constitution,
@@ -28,6 +29,13 @@ export default function MonsterTopStats({ monster }) {
     let immunities = [];
     let conditions = [];
    // let speeds = [];
+
+    const getPropValue = (obj, key) =>
+        key.split('.').reduce((o, x) =>
+            o == undefined ? o : o[x]
+            , obj)
+
+    const xp = getPropValue(monster, "xp");
 
     if (armorClass[0].armor) { /* TODO Figure out how often there are multiple entries in this array */
         armorNames = armorClass[0].armor.map((armor) => armor.name);
@@ -112,13 +120,13 @@ export default function MonsterTopStats({ monster }) {
         specialAbilitiesOutput = "Not available";
     } else {
         specialAbilitiesOutput = specialAbilities.map((specialAbility, index) => (
-            <>
+            <div className="property-line">
                 <h4>{specialAbility.name}</h4>
                 <p>
                   {specialAbility.desc}
                   {specialAbility.usage && (`${specialAbility.usage.times} ${specialAbility.usage.type}`)}
                 </p>
-            </>
+            </div>
         ));
     }
     
@@ -199,6 +207,7 @@ export default function MonsterTopStats({ monster }) {
             <div className="property-block">
                 {specialAbilitiesOutput}
             </div>
+            {/* {specialAbilities.Spellcasting && <SpellcastingComponent monster={monster}/>} */}
         </div>
     )
 }

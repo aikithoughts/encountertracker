@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button';
 import Combatant from './Combatant';
 import AddCombatant from './AddCombatant';
 import MonsterStatBlock from './MonsterStatBlock';
-import "./monster-stats.css"; // Import the CSS file for the EncounterTable component
 
 
 export default function EncounterTable({ combatants }){

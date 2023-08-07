@@ -1,9 +1,9 @@
-body {
+.monster-stats-container {
     text-align: center;
     font-size: 13.5px;
     line-height: 1.2em;
   }
-  body *{
+  .monster-stats-container *{
     box-sizing: border-box;
     max-width: 100%;
     font-family: 'Noto Sans', 'Myriad Pro', Calibri, Helvetica,
@@ -102,6 +102,11 @@ body {
   }
   .property-line h4{
     color: #7A200D;
+    font-weight: bold;
+  }
+
+  .property-line p {
+    margin-inline-start: .25em;
   }
   .property-line{
     text-indent: -1em;

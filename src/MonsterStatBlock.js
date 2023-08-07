@@ -5,7 +5,7 @@ import "./monster-stats.css";
 export default function MonsterStatBlock({ monster, onClearData }) {
 
     return (
-        <div className="monster-stat-block"> {/* Use the monster-stat-block class */}
+        <div className="monster-stats-container"> {/* Use the monster-stat-block class */}
             <div className="stat-block wide">
                 <hr className="orange-border" />
                 <div className="section-left">
