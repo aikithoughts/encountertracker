@@ -118,7 +118,7 @@ export default function MonsterStatBlock({ monster, onClearData }) {
                             INT
                         </th>
                         <th>
-                            wIS
+                            WIS
                         </th>
                         <th>
                             CHA
