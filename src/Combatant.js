@@ -14,7 +14,7 @@ import axios from 'axios';
   
     const handleFetchClick = async (name) => {
       try {
-        const response = await axios.get(apiUrl + name.toLowerCase());
+        const response = await axios.get(apiUrl + name.replace(/ /g, "-").toLowerCase());
         onDataFromChild(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
