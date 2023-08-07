@@ -1,6 +1,6 @@
 import React from 'react';
-import SpellcastingComponent from './Spellcasting';
-import "./monster-stats.css";
+// import SpellcastingComponent from './Spellcasting';
+// import "./monster-stats.css";
 
 export default function MonsterTopStats({ monster }) {
 
