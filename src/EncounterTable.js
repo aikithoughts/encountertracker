@@ -17,6 +17,39 @@ export default function EncounterTable({ combatants }) {
   const [selectedCombatantId, setSelectedCombatantId] = useState(null);
   const [enemyData, setEnemyData] = useState(null);
 
+  function flattenObject(obj, prefix = '') {
+    const flattened = {};
+  
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        const propName = prefix ? `${prefix}.${key}` : key;
+  
+        if (Array.isArray(obj[key])) {
+          obj[key].forEach((item, index) => {
+            const arrayItemName = item.name || index.toString();
+            const arrayItemPropName = `${propName}.${arrayItemName}`;
+            
+            if (typeof item === 'object' && item !== null) {
+              const nestedFlattened = flattenObject(item, arrayItemPropName);
+              Object.assign(flattened, nestedFlattened);
+            } else {
+              flattened[arrayItemPropName] = item;
+            }
+          });
+        } else if (typeof obj[key] === 'object' && obj[key] !== null) {
+          const nestedFlattened = flattenObject(obj[key], propName);
+          Object.assign(flattened, nestedFlattened);
+        } else {
+          flattened[propName] = obj[key];
+        }
+      }
+    }
+  
+    return flattened;
+  }
+  
+  
+
   const handleDeletedCombatant = (combatantName) => {
     const updatedCombatants = combatantState.filter((combatant) => combatant.name !== combatantName);
     setCombatantState(updatedCombatants);
@@ -47,6 +80,8 @@ export default function EncounterTable({ combatants }) {
 
   const handleDataFromChild = (data) => {
     // Do something with the data received from the child component
+    const testData = flattenObject(data);
+    console.log(testData);
     setEnemyData(data);
     // You can perform any further logic or state updates here
   };
