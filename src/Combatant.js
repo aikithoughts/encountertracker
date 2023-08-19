@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
   
  export default function Combatant({ combatant, onDeleteCombatant, isEditMode, isSelected, onSelectCombatant, onDataFromChild }){
+
     const [editedCombatant, setEditedCombatant] = useState(combatant);
   
     const handleDeleteClick = () => {
@@ -37,57 +38,40 @@ import axios from 'axios';
         [name]: value,
       }));
     };
+
+    const inputFields = [
+      { name: 'name', type: 'text', readOnly: !isEditMode },
+      { name: 'initiative', type: 'number', readOnly: !isEditMode },
+      { name: 'type', type: 'text', readOnly: !isEditMode },
+      { name: 'currenthp', type: 'number', readOnly: !isEditMode },
+      { name: 'totalhp', type: 'number', readOnly: !isEditMode },
+    ];
+
+    const renderCombatant = (field) => {
+      if (isEditMode) {
+        return (
+          <input
+            type={field.type}
+            name={field.name}
+            value={editedCombatant[field.name]}
+            onChange={handleInputChange}
+          />
+        )
+      } else {
+        return <span>{editedCombatant[field.name]}</span>
+      }
+    }
+
+
     return(
         <tr
-          id={combatant.id}
-          style={{ backgroundColor: isSelected ? 'lightblue' : 'inherit' }}
+          id={editedCombatant.id}
           onClick={onSelectCombatant}>
+          {inputFields.map((field, index) => (
+            <td key={index}>{renderCombatant(field)}</td>
+          ))}
           <td>
-            <input
-              type="text"
-              name="name"
-              value={editedCombatant.name}
-              onChange={handleInputChange}
-              readOnly={!isEditMode}
-            />
-          </td>
-          <td>
-            <input
-              type="number"
-              name="initiative"
-              value={editedCombatant.initiative}
-              onChange={handleInputChange}
-              readOnly={!isEditMode}
-            />
-          </td>
-          <td>
-            <input
-              type="text"
-              name="type"
-              value={editedCombatant.type}
-              onChange={handleInputChange}
-              readOnly={!isEditMode}
-            />
-          </td>
-          <td>
-            <input
-              type="number"
-              name="currenthp"
-              value={editedCombatant.currenthp}
-              onChange={handleInputChange}
-              readOnly={!isEditMode}
-            />
-            /
-            <input
-              type="number"
-              name="totalhp"
-              value={editedCombatant.totalhp}
-              onChange={handleInputChange}
-              readOnly={!isEditMode}
-            />
-          </td>
-          <td>
-            <Button variant="warning" onClick={handleDeleteClick}>Delete</Button>
+            <Button variant="warning" onClick={handleDeleteClick}>Delete</Button> {' '}
             {(combatant.type === "enemy") ? renderFetchButton(combatant.name) : ''}
           </td>
         </tr>
