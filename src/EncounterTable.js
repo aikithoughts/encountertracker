@@ -102,7 +102,7 @@ export default function EncounterTable({ combatants }) {
         <Col md="auto">
           <Button variant="primary" onClick={handleToggleEditMode}>
             {isEditMode ? "Save" : "Edit Mode"}
-          </Button>
+          </Button> {' '}
           <Button variant="danger" onClick={handleToggleShowAddCombatant}>
             Add Combatant
           </Button>
