@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import EncounterTable from './EncounterTable';
 import { COMBATANTS } from './data';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "./monster-stats.css";
+import "./App.css";
 
 export default function EncounterBoard() {
   return (

@@ -51,6 +51,10 @@ export default function EncounterTable({ combatants }) {
     // You can perform any further logic or state updates here
   };
 
+  const handleSelectedCombatant = (id) => {
+    setSelectedCombatantId(id);
+  }
+
   const processFormData = (formData) => {
     const newCombatant = {
       id: Date.now(), // Generate a unique ID (you can use a library like uuid for a more reliable unique ID)
@@ -75,7 +79,7 @@ export default function EncounterTable({ combatants }) {
       isEditMode={isEditMode}
       onInputChange={(event, field) => handleInputChange(event, index, field)}
       isSelected={selectedCombatantId === combatant.id}
-      onSelectCombatant={() => setSelectedCombatantId(combatant.id)}
+      onSelectCombatant={handleSelectedCombatant}
       onDataFromChild={handleDataFromChild}
     />
 
@@ -86,11 +90,12 @@ export default function EncounterTable({ combatants }) {
         <Table striped bordered hover>
           <thead>
             <tr>
+              <th></th>
               <th>Name</th>
               <th>Initiative</th>
               <th>Type</th>
-              <th>Hit Points</th>
-              <th>Action</th>
+              <th>Current Hitpoints</th>
+              <th>Total Hitpoints</th>
             </tr>
           </thead>
           <tbody>
