@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import { ArrowRightCircleFill } from 'react-bootstrap-icons';
 import { EmojiDizzy } from 'react-bootstrap-icons';
 import { XCircleFill } from 'react-bootstrap-icons';
