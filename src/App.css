@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+
+.combatant-selected-row {
+  border: 2px solid red;
+  box-shadow: 0 0 10px red;
+}
+

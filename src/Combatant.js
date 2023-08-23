@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
+import { ArrowRightCircleFill } from 'react-bootstrap-icons';
+import { EmojiDizzy } from 'react-bootstrap-icons';
+import { XCircleFill } from 'react-bootstrap-icons';
+import { Download } from 'react-bootstrap-icons';
 import axios from 'axios';
   
  export default function Combatant({ combatant, onDeleteCombatant, isEditMode, isSelected, onSelectCombatant, onDataFromChild }){
@@ -23,12 +27,12 @@ import axios from 'axios';
     };
 
     const renderFetchButton = (name) => (
-      <Button
-        variant="info"
+      <Download
         onClick={() => handleFetchClick(name)}
-        value="name">
-        Fetch
-      </Button>
+        value="name"
+        className="text-info mr-2"
+        size={20}>
+      </Download>
     )
   
     const handleInputChange = (event) => {
@@ -66,12 +70,19 @@ import axios from 'axios';
     return(
         <tr
           id={editedCombatant.id}
-          onClick={onSelectCombatant}>
+          onClick={() => onSelectCombatant(editedCombatant.id)}
+          >
+          <td>
+            {isSelected && <ArrowRightCircleFill className="text-success mr-2" size={20}/>}{' '}
+            {editedCombatant.currenthp <= 0 && <EmojiDizzy size={20}/>}
+          </td>
           {inputFields.map((field, index) => (
-            <td key={index}>{renderCombatant(field)}</td>
+            <td key={index}>
+            {renderCombatant(field)}
+          </td>
           ))}
           <td>
-            <Button variant="warning" onClick={handleDeleteClick}>Delete</Button> {' '}
+            <XCircleFill className="text-danger mr-2" size={20} onClick={handleDeleteClick}/> {' '}
             {(combatant.type === "enemy") ? renderFetchButton(combatant.name) : ''}
           </td>
         </tr>
